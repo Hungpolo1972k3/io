@@ -7,7 +7,6 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const http = require('http');
 const { Server } = require('socket.io');
-const bcrypt = require('bcrypt');
 const User = require('./usermodel')
 dotenv.config();
 
@@ -131,14 +130,10 @@ app.post('/register', async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ message: 'Email already exists' });
     }
-
-    // Mã hóa mật khẩu
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     // Tạo người dùng mới
     const newUser = new User({
       email,
-      password: hashedPassword,
+      password,
       fullname,
     });
 
@@ -178,9 +173,7 @@ app.post('/login', async (req, res) => {
       return res.status(404).json({ message: 'Invalid email or password' });
     }
 
-    // Kiểm tra mật khẩu
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
+    if (password !== user.password) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
