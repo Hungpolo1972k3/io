@@ -15,7 +15,7 @@ app.use(express.json())
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:3000', // Đảm bảo frontend của bạn là localhost:3000
+    origin: 'https://btliot-7018a.web.app', // Đảm bảo frontend của bạn là localhost:3000
     methods: ['GET', 'POST'],
   }
 });
@@ -25,7 +25,7 @@ connectDb();
 
 // Cấu hình CORS
 app.use(cors({
-  origin: 'http://localhost:3000', // Đảm bảo frontend của bạn là localhost:3000
+  origin: 'https://btliot-7018a.web.app', // Đảm bảo frontend của bạn là localhost:3000
   methods: 'GET, POST', 
   allowedHeaders: 'Content-Type',
 }));
